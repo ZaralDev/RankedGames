@@ -88,7 +88,7 @@ public class Main extends JavaPlugin {
 		kitList.addAll(kitConfig.getConfig().getConfigurationSection("Kits").getKeys(false));
 		String[] kit = (String[])kitList.toArray(new String[kitList.size()]);
 		for (int i = 0; i < kit.length; i++) {
-			Bukkit.broadcastMessage("Kit: " + i);
+			Bukkit.getServer().broadcastMessage("Kit: " + i);
 			new Kit(kit[i], kitConfig.getConfig().getString("Kits." + kit[i] + ".icon"));
 		}
 	}
@@ -99,26 +99,24 @@ public class Main extends JavaPlugin {
 		Inventory inventory = null;
 		for (int i = 0; i < mapList.length; i++) {
 			MapUtils.directoryName.put(MapUtils.getName(mapList[i]), mapList[i]);
-			Bukkit.broadcastMessage(mapList[i] + " " + i);
+			Bukkit.getServer().broadcastMessage(mapList[i] + " " + i);
 			if (MapUtils.isValidMap(mapList[i], type))
 				validMap[i] = mapList[i];
 		}
 		String name = "Voter une map (" + type.getType() + "vs" + type.getType() + ")";
 		inventory = getServer().createInventory(null, 9, name);
-		if (mapList.length <= 18) {
+		if (mapList.length <= 18)
 			inventory.setMaxStackSize(18);
-		} else if (mapList.length <= 27) {
+		 else if (mapList.length <= 27)
 			inventory.setMaxStackSize(27);
-		} else if (mapList.length <= 36) {
+		 else if (mapList.length <= 36)
 			inventory.setMaxStackSize(36);
-		} else if (mapList.length <= 45) {
+		 else if (mapList.length <= 45)
 			inventory.setMaxStackSize(45);
-		} else {
+		else
 			inventory.setMaxStackSize(54);
-		}
 		for (int i = 0; i < validMap.length; i++) {
-			if (validMap[i] != null)
-			{
+			if (validMap[i] != null) {
 				ItemStack item = new ItemStack(MapUtils.getInventoryItem(validMap[i]));
 				ItemMeta meta = item.getItemMeta();
 				meta.setDisplayName(validMap[i]);
@@ -127,7 +125,7 @@ public class Main extends JavaPlugin {
 				meta.setLore(lore);
 				item.setItemMeta(meta);
 				inventory.addItem(new ItemStack[] { item });
-				Bukkit.broadcastMessage("item: " + item.toString());
+				Bukkit.getServer().broadcastMessage("item: " + item.toString());
 			}
 		}
 		chooseInventory.put(type, inventory);
@@ -143,8 +141,8 @@ public class Main extends JavaPlugin {
 		kitsInventory = getServer().createInventory(null, 54, "Kits");
 		for (Kit kit : Kit.getKits()) {
 			kitsInventory.addItem(new ItemStack[] { kit.getIcon() });
-			Bukkit.broadcastMessage(ChatColor.BLUE + "kiticon" + kit.getIcon());
-			Bukkit.broadcastMessage(ChatColor.DARK_RED + "kit" + kit.toString());
+			Bukkit.getServer().broadcastMessage(ChatColor.BLUE + "kiticon" + kit.getIcon());
+			Bukkit.getServer().broadcastMessage(ChatColor.DARK_RED + "kit" + kit.toString());
 		}
 	}
 }
