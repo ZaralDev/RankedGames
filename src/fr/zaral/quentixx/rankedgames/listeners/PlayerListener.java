@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -96,7 +97,26 @@ public class PlayerListener implements Listener {
 			player.openInventory(Main.kitsInventory);
 		}
 	}
-  
+	
+	@EventHandler
+	public void onPlayerDeath(PlayerDeathEvent event) {
+		Player player = event.getEntity().getPlayer();
+		RankedPlayer rankedPlayer = RankedPlayer.get(player.getName());
+		
+		if ((rankedPlayer != null) && (rankedPlayer.isInGame())) {
+			//Player killer = event.getEntity().getKiller();
+			Ranked ranked = Ranked.get(rankedPlayer);
+			ranked.messageGame(ChatColor.RED + player.getName() + " a perdu !");
+			ranked.removePlayer(rankedPlayer);
+			if (ranked.getPlayers().size() == 1) {
+				RankedPlayer winer = ranked.getPlayers().get(0);
+				for (Player p : winer.getPlayer().getWorld().getPlayers()) {
+					p.sendMessage(ChatColor.GOLD + winer.getPlayerName() + " a gagné la partie !");
+				}
+			}
+		}
+	}
+	
 	@EventHandler
 	public void onInventoryClick(InventoryClickEvent event) {
 		if ((event.getWhoClicked() instanceof Player)) {
