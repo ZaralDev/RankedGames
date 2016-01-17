@@ -1,5 +1,7 @@
 package fr.zaral.quentixx.rankedgames.listeners;
 
+import java.sql.SQLException;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
@@ -11,9 +13,11 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 
+import fr.zaral.quentixx.rankedgames.Database;
 import fr.zaral.quentixx.rankedgames.Main;
 import fr.zaral.quentixx.rankedgames.event.PlayerLeaveQueueEvent;
 import fr.zaral.quentixx.rankedgames.event.PlayerLeaveRankedEvent;
@@ -23,6 +27,22 @@ import fr.zaral.quentixx.rankedgames.ranked.RankedPlayer;
 import fr.zaral.quentixx.rankedgames.ranked.RankedQueue;
 
 public class PlayerListener implements Listener {
+	
+	@EventHandler
+	public void onPlayerLogin(PlayerLoginEvent event) {
+		Player player = event.getPlayer();
+		String name = player.getName();
+		String uuid = player.getUniqueId().toString();
+		if (Database.isConnected()) {
+			try {
+				if (!Database.isRegistredUser(uuid))
+					Database.registerUser(name, uuid);
+				Database.updateName(name, uuid);
+			} catch (SQLException ex) {
+				ex.printStackTrace();
+			}
+		}
+	}
 	
 	@EventHandler
 	public void onPlayerQuit(PlayerQuitEvent event) {
