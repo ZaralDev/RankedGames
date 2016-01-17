@@ -1,0 +1,30 @@
+# Pour les items custom, il y a un format requis:
+#  <ITEM> <Nombre> <Data> <EnchantName> <EnchantLevel> (Vous pouvez ajouter autant d'enchant que vous le souhaitez a partir du moment ou il y a
+#  a partir du moment ou il y a <EnchantName> et  <EnchantLevel> )
+
+# <ITEM> Le type d'item: utiliser les items repertorie ici: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Material.html
+# <Nombre> Definit le nombre d'item a donner
+# <Data> Modifie la data de l'item (FACULTATIF)
+# <EnchantName> Nom de l'enchantement (list de touts les enchants ici: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/enchantments/Enchantment.html) (FACULTATIF)
+# <EnchantLevel> Niveau d'enchantement (FACULTATIF)
+
+Kits:
+    # Nom du kit
+    guerrier:
+        icon: "DIAMOND_SWORD"
+        helmet: "IRON_HELMET 1 1"
+        chestplate: "DIAMOND_CHESTPLATE 1 1 PROTECTION_ENVIRONMENTAL 2"
+        leggings: "LEATHER_LEGGINGS 1 1 PROTECTION_FIRE 1"
+        boots: "IRON_BOOTS 1 1 PROTECTION_FALL 1"
+        items:
+          - IRON_SWORD 1 DAMAGE_ALL 1
+          - COOKED_BEEF 15
+    Gitan:
+        icon: "DIRT"
+        helmet: "IRON_HELMET 1 1"
+        chestplate: "DIAMOND_CHESTPLATE 1 1 PROTECTION_ENVIRONMENTAL 2"
+        leggings: "LEATHER_LEGGINGS 1 1 PROTECTION_FIRE 1"
+        boots: "IRON_BOOTS 1 1 PROTECTION_FALL 1"
+        items:
+          - IRON_SWORD 1 DAMAGE_ALL 1
+          - COOKED_BEEF 15

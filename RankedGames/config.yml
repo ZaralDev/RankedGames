@@ -1,0 +1,43 @@
+#RankedGames file configuration
+
+permission.vip: rankedgames.rank.vip
+
+backup: "/plugins/RankedGames/backup"
+       
+#Le nom de la map dans le dossier devra être celui des chemins
+Maps:
+    Alpha:
+        # Nom de la map qui va etre affiche
+        name: "Alpha"       
+        #Item repr�sentant la map (Liste ici: //hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html)
+        inventoryItem: "DIRT"
+        #Location
+        x: 1042.500
+        y: 67
+        z: -632.500
+        #La map peut �tre utilis� pour ces modes de jeux:
+        typeMap:
+         - "1"
+         - "2"         
+         - "3"
+    Exemple:
+        name: "Map exemple"
+        inventoryItem: "DIRT"
+        #Location
+        x: 20.500
+        y: 50
+        z: 399.502
+        typeMap:
+         - "1"
+         - "3"
+    Beta:
+        name: "Map Beta"
+        inventoryItem: "STONE"
+        #Location
+        x: 20.500
+        y: 50
+        z: 399.502
+        typeMap:
+         - "1"
+         - "2"         
+         - "3"
