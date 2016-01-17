@@ -13,6 +13,7 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
@@ -25,6 +26,7 @@ import fr.zaral.quentixx.rankedgames.kit.Kit;
 import fr.zaral.quentixx.rankedgames.ranked.Ranked;
 import fr.zaral.quentixx.rankedgames.ranked.RankedPlayer;
 import fr.zaral.quentixx.rankedgames.ranked.RankedQueue;
+import fr.zaral.quentixx.rankedgames.utils.PlayerUtils;
 
 public class PlayerListener implements Listener {
 	
@@ -42,6 +44,13 @@ public class PlayerListener implements Listener {
 				ex.printStackTrace();
 			}
 		}
+	}
+	
+	@EventHandler
+	public void onPlayerJoin(PlayerJoinEvent event) {
+		Player player = event.getPlayer();
+		if (PlayerUtils.getRank(player) != null)
+			player.setDisplayName(PlayerUtils.getRank(player).getString() + " " + player.getName());
 	}
 	
 	@EventHandler
