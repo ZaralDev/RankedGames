@@ -29,7 +29,7 @@ public class Main extends JavaPlugin {
 	/**
 	 * @authors Zaral, Quentixx
 	 */
-  
+	
 	public static Plugin plugin;
 	public static ArrayList<Ranked> rankeds = new ArrayList<>();
 	public static ArrayList<RankedType> types = new ArrayList<>();
@@ -79,6 +79,14 @@ public class Main extends JavaPlugin {
 		for (RankedType type : types)
 			loadChooseInventory(type);
 		loadKitsInventory();
+		
+		if (getConfig().getBoolean("database.enabled")) {
+			String url = getConfig().getString("database.url");
+			String user = getConfig().getString("database.user");
+			String pass = getConfig().getString("database.pass");
+			Database.init(url, user, pass);
+			Database.connect();
+		}
 	}
 	
 	public static void readConfig() {

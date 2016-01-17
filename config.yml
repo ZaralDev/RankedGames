@@ -1,5 +1,10 @@
 #RankedGames file configuration
 
+database.enabled: true
+database.url: url
+database.user: user
+database.pass: pass
+
 permission.vip: rankedgames.rank.vip
 
 backup: "/plugins/RankedGames/backup"
