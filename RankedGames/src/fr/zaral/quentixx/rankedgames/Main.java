@@ -124,7 +124,7 @@ public class Main extends JavaPlugin {
 				lore.add(ChatColor.YELLOW + "Clique pour voter");
 				meta.setLore(lore);
 				item.setItemMeta(meta);
-				inventory.addItem(new ItemStack[] { item });
+				inventory.addItem(new ItemStack[]{item});
 				Bukkit.getServer().broadcastMessage("item: " + item.toString());
 			}
 		}
@@ -133,7 +133,7 @@ public class Main extends JavaPlugin {
   
 	public static Inventory getInventory(RankedType type) {
 		if (chooseInventory.get(type) != null)
-			return (Inventory)chooseInventory.get(type);
+			return (Inventory) chooseInventory.get(type);
 		return null;
 	}
   
