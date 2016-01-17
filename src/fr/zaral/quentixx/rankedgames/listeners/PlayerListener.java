@@ -71,7 +71,7 @@ public class PlayerListener implements Listener {
 	}
   
 	@EventHandler
-	public void onEntityPvp(EntityDamageByEntityEvent event) {
+	public void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
 		if ((event.getDamager().getType() == EntityType.PLAYER) && (event.getEntityType() == EntityType.PLAYER)) {
 			Player damager = (Player)event.getDamager();
 			Player target = (Player)event.getEntity();
