@@ -1,8 +1,16 @@
 package fr.zaral.quentixx.rankedgames;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.util.logging.Level;
+
+import org.bukkit.Bukkit;
+
 public class Database {
 	
 	private static String url, user, pass;
+	private static Connection connection;
 	
 	public static String getUrl() {
 		return url;
@@ -24,10 +32,26 @@ public class Database {
 	}
 	
 	public static void connect() {
-		
+		try {
+			connection = DriverManager.getConnection(url, user, pass);
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+	}
+	
+	public static Connection getConnection() {
+		return connection;
 	}
 	
 	public static boolean isConnected() {
+		if (connection != null) {
+			try {
+			if (!connection.isClosed())
+				return true;
+			} catch (SQLException ex) {
+				Bukkit.getServer().getLogger().log(Level.WARNING, "Can not resolve database connection");
+			}
+		}
 		return false;
 	}
 	

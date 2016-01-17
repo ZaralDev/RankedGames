@@ -148,4 +148,9 @@ public class Main extends JavaPlugin {
 			// Bukkit.getServer().broadcastMessage(ChatColor.DARK_RED + "kit" + kit.toString());
 		}
 	}
+	
+	public void onDisable() {
+		if (Database.isConnected())
+			Database.closeConnection();
+	}
 }
