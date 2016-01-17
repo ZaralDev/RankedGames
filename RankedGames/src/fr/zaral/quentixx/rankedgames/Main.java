@@ -20,14 +20,15 @@ import fr.zaral.quentixx.rankedgames.listeners.PlayerListener;
 import fr.zaral.quentixx.rankedgames.listeners.SignListener;
 import fr.zaral.quentixx.rankedgames.ranked.Ranked;
 import fr.zaral.quentixx.rankedgames.ranked.RankedType;
+import fr.zaral.quentixx.rankedgames.utils.CodeUtils;
 import fr.zaral.quentixx.rankedgames.utils.ConfigAccessor;
 import fr.zaral.quentixx.rankedgames.utils.MapUtils;
 
 public class Main extends JavaPlugin {
   
 	public static Plugin plugin;
-	public static ArrayList<Ranked> rankeds = new ArrayList();
-	public static ArrayList<RankedType> types = new ArrayList();
+	public static ArrayList<Ranked> rankeds = new ArrayList<>();
+	public static ArrayList<RankedType> types = new ArrayList<>();
 	public static Set<String> mapList;
 	public static Set<String> kitList;
 	public static String[] map;
@@ -42,8 +43,8 @@ public class Main extends JavaPlugin {
 	public void onEnable() {
 		getLogger().info("Loading plugin...");
 		plugin = this;
-		mapList = new HashSet();
-		kitList = new HashSet();
+		mapList = new HashSet<>();
+		kitList = new HashSet<>();
 		
 		dataFolder = getDataFolder();
 		if (!dataFolder.exists())
@@ -55,7 +56,7 @@ public class Main extends JavaPlugin {
 		if (!backupDir.exists())
 			backupDir.mkdir();
     
-		chooseInventory = new HashMap();
+		chooseInventory = new HashMap<>();
 		new SpamLevel();
     
 		getLogger().info("Loading configuration file...");
@@ -88,7 +89,7 @@ public class Main extends JavaPlugin {
 		kitList.addAll(kitConfig.getConfig().getConfigurationSection("Kits").getKeys(false));
 		String[] kit = (String[])kitList.toArray(new String[kitList.size()]);
 		for (int i = 0; i < kit.length; i++) {
-			Bukkit.getServer().broadcastMessage("Kit: " + i);
+			// Bukkit.getServer().broadcastMessage("Kit: " + i);
 			new Kit(kit[i], kitConfig.getConfig().getString("Kits." + kit[i] + ".icon"));
 		}
 	}
@@ -99,33 +100,23 @@ public class Main extends JavaPlugin {
 		Inventory inventory = null;
 		for (int i = 0; i < mapList.length; i++) {
 			MapUtils.directoryName.put(MapUtils.getName(mapList[i]), mapList[i]);
-			Bukkit.getServer().broadcastMessage(mapList[i] + " " + i);
+			// Bukkit.getServer().broadcastMessage(mapList[i] + " " + i);
 			if (MapUtils.isValidMap(mapList[i], type))
 				validMap[i] = mapList[i];
 		}
 		String name = "Voter une map (" + type.getType() + "vs" + type.getType() + ")";
-		inventory = getServer().createInventory(null, 9, name);
-		if (mapList.length <= 18)
-			inventory.setMaxStackSize(18);
-		 else if (mapList.length <= 27)
-			inventory.setMaxStackSize(27);
-		 else if (mapList.length <= 36)
-			inventory.setMaxStackSize(36);
-		 else if (mapList.length <= 45)
-			inventory.setMaxStackSize(45);
-		else
-			inventory.setMaxStackSize(54);
+		inventory = getServer().createInventory(null, CodeUtils.getIdealInvSize(mapList.length), name);
 		for (int i = 0; i < validMap.length; i++) {
 			if (validMap[i] != null) {
 				ItemStack item = new ItemStack(MapUtils.getInventoryItem(validMap[i]));
 				ItemMeta meta = item.getItemMeta();
 				meta.setDisplayName(validMap[i]);
-				ArrayList<String> lore = new ArrayList();
-				lore.add(ChatColor.YELLOW + "Clique pour voter");
+				ArrayList<String> lore = new ArrayList<>();
+				lore.add(ChatColor.YELLOW + "Cliquez pour voter");
 				meta.setLore(lore);
 				item.setItemMeta(meta);
 				inventory.addItem(new ItemStack[]{item});
-				Bukkit.getServer().broadcastMessage("item: " + item.toString());
+				// Bukkit.getServer().broadcastMessage("item: " + item.toString());
 			}
 		}
 		chooseInventory.put(type, inventory);
@@ -140,9 +131,9 @@ public class Main extends JavaPlugin {
 	public void loadKitsInventory() {
 		kitsInventory = getServer().createInventory(null, 54, "Kits");
 		for (Kit kit : Kit.getKits()) {
-			kitsInventory.addItem(new ItemStack[] { kit.getIcon() });
-			Bukkit.getServer().broadcastMessage(ChatColor.BLUE + "kiticon" + kit.getIcon());
-			Bukkit.getServer().broadcastMessage(ChatColor.DARK_RED + "kit" + kit.toString());
+			kitsInventory.addItem(new ItemStack[]{kit.getIcon()});
+			// Bukkit.getServer().broadcastMessage(ChatColor.BLUE + "kiticon" + kit.getIcon());
+			// Bukkit.getServer().broadcastMessage(ChatColor.DARK_RED + "kit" + kit.toString());
 		}
 	}
 }
