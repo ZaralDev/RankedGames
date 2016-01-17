@@ -3,6 +3,7 @@ package fr.zaral.quentixx.rankedgames;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 
@@ -80,22 +81,48 @@ public class Database {
 		return null;
 	}
 	
-	public static boolean isRegistredUser(String name) throws SQLException {
-		// TODO: A FAIRE
-		return false;
+	public static boolean isRegistredUser(String uuid) throws SQLException {
+		PreparedStatement queryStatement = createStatement("SELECT uuid FROM users WHERE uuid = ?");
+		queryStatement.setString(1, uuid);
+		queryStatement.executeQuery();
+		ResultSet resultSet = queryStatement.getResultSet();
+		boolean registred = resultSet.next();
+		return registred;
 	}
 	
-	public static void registerUser(String name) throws SQLException {
-		// TODO: A FAIRE
+	public static void registerUser(String name, String uuid) throws SQLException {
+		PreparedStatement queryStatement = createStatement("INSERT INTO users (uuid, name, ratio) VALUES (?, ?, 0)");
+		queryStatement.setString(1, uuid);
+		queryStatement.setString(2, name);
+		queryStatement.executeUpdate();
+		queryStatement.close();
 	}
 	
 	public static int getRatio(String name) throws SQLException {
-		// TODO: A FAIRE
-		return 0;
+		PreparedStatement queryStatement = createStatement("SELECT ratio FROM users WHERE name = ?");
+		queryStatement.setString(1, name);
+		queryStatement.executeQuery();
+		ResultSet resultSet = queryStatement.getResultSet();
+		resultSet.next();
+		int ratio = resultSet.getInt(1);
+		queryStatement.close();
+		return ratio;
 	}
 	
 	public static int updateRatio(String name, int ratio) throws SQLException {
-		// TODO: A FAIRE
+		PreparedStatement queryStatement = createStatement("UPDATE users SET ratio = ? WHERE name = ?");
+		queryStatement.setInt(1, ratio);
+		queryStatement.setString(2, name);
+		queryStatement.executeUpdate();
+		queryStatement.close();
 		return ratio;
+	}
+	
+	public static void updateName(String name, String uuid) throws SQLException {
+		PreparedStatement queryStatement = createStatement("UPDATE users SET name = ? WHERE uuid = ?");
+		queryStatement.setString(1, name);
+		queryStatement.setString(2, uuid);
+		queryStatement.executeUpdate();
+		queryStatement.close();
 	}
 }
