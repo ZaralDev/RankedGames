@@ -1,9 +1,14 @@
 package fr.zaral.quentixx.rankedgames.utils;
 
+import java.sql.SQLException;
+
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.potion.PotionEffect;
+
+import fr.zaral.quentixx.rankedgames.Database;
+import fr.zaral.quentixx.rankedgames.Rank;
 
 public class PlayerUtils {
 	
@@ -20,5 +25,18 @@ public class PlayerUtils {
 		player.setFallDistance(0.0F);
 		for (PotionEffect effect : player.getActivePotionEffects())
 			player.removePotionEffect(effect.getType());
+	}
+	
+	public static Rank getRank(Player player) {
+		if (Database.isConnected()) {
+			try {
+				for (Rank rank : Rank.values())
+					if (Database.getRatio(player.getName()) >= rank.getRatioRequired())
+						return rank;
+			} catch (SQLException ex) {
+				ex.printStackTrace();
+			}
+		}
+		return null;
 	}
 }
