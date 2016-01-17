@@ -81,11 +81,15 @@ public class Main extends JavaPlugin {
 		loadKitsInventory();
 		
 		if (getConfig().getBoolean("database.enabled")) {
+			getLogger().info("Loading Database...");
 			String url = getConfig().getString("database.url");
 			String user = getConfig().getString("database.user");
 			String pass = getConfig().getString("database.pass");
 			Database.init(url, user, pass);
 			Database.connect();
+		} else {
+			getLogger().info("Loading stocking ratio file...");
+			// TODO: A faire
 		}
 	}
 	
