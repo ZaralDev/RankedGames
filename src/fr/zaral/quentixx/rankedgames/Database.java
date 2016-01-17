@@ -9,6 +9,10 @@ import org.bukkit.Bukkit;
 
 public class Database {
 	
+	/**
+	 * Created by Quentixx at 17/01/2016
+	 */
+	
 	private static String url, user, pass;
 	private static Connection connection;
 	
@@ -56,6 +60,11 @@ public class Database {
 	}
 	
 	public static void closeConnection() {
-		
+		try {
+			connection.close();
+			Bukkit.getServer().getLogger().log(Level.INFO, "Database closed!");
+		} catch (SQLException ex) {
+			Bukkit.getServer().getLogger().log(Level.SEVERE, "Can not close database: " + ex.getMessage());
+		}
 	}
 }
