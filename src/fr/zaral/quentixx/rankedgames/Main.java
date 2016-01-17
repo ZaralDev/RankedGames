@@ -25,6 +25,10 @@ import fr.zaral.quentixx.rankedgames.utils.ConfigAccessor;
 import fr.zaral.quentixx.rankedgames.utils.MapUtils;
 
 public class Main extends JavaPlugin {
+	
+	/**
+	 * @authors Zaral, Quentixx
+	 */
   
 	public static Plugin plugin;
 	public static ArrayList<Ranked> rankeds = new ArrayList<>();
