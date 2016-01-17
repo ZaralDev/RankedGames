@@ -23,9 +23,8 @@ import fr.zaral.quentixx.rankedgames.utils.ConfigAccessor;
 import fr.zaral.quentixx.rankedgames.utils.MapUtils;
 
 
-public class Main
-  extends JavaPlugin
-{
+public class Main extends JavaPlugin {
+  
   public static Plugin plugin;
   public static ArrayList<Ranked> rankeds = new ArrayList();
   public static ArrayList<RankedType> types = new ArrayList();
@@ -40,25 +39,24 @@ public class Main
   public static ItemStack itemStack;
   public static ConfigAccessor kitConfig;
   
-  public void onEnable()
-  {
+  public void onEnable() {
     getLogger().info("Loading plugin...");
     plugin = this;
     mapList = new HashSet();
     kitList = new HashSet();
     
     dataFolder = getDataFolder();
-    if (!dataFolder.exists()) {
+    if (!dataFolder.exists())
       dataFolder.mkdir();
-    }
+      
     mapsDir = new File(dataFolder.getPath() + File.separator + "maps");
-    if (!mapsDir.exists()) {
+    if (!mapsDir.exists())
       mapsDir.mkdir();
-    }
+    
     backupDir = new File(dataFolder.getPath() + File.separator + "backup");
-    if (!backupDir.exists()) {
+    if (!backupDir.exists())
       backupDir.mkdir();
-    }
+    
     chooseInventory = new HashMap();
     new SpamLevel();
     
@@ -73,47 +71,41 @@ public class Main
     
     Bukkit.getServer().getPluginManager().registerEvents(new PlayerListener(), this);
     Bukkit.getServer().getPluginManager().registerEvents(new SignListener(), this);
-    for (int i = 1; i <= 3; i++) {
+    for (int i = 1; i <= 3; i++)
       types.add(new RankedType(i));
-    }
-    for (RankedType type : types) {
+    
+    for (RankedType type : types)
       loadChooseInventory(type);
-    }
+    
     loadKitsInventory();
   }
   //test
-  public static void readConfig()
-  {
+  public static void readConfig() {
     plugin.getLogger().info("Initialize config...");
     mapList.addAll(plugin.getConfig().getConfigurationSection("Maps").getKeys(false));
     map = (String[])mapList.toArray(new String[mapList.size()]);
-    for (int i = 0; i < map.length; i++)
-    {
+    for (int i = 0; i < map.length; i++) {
       List<String> list = plugin.getConfig().getStringList("Maps." + map[i] + ".typeMap");
       String[] stringList = new String[list.size()];
       stringList = (String[])list.toArray(stringList);
     }
     kitList.addAll(kitConfig.getConfig().getConfigurationSection("Kits").getKeys(false));
     String[] kit = (String[])kitList.toArray(new String[kitList.size()]);
-    for (int i = 0; i < kit.length; i++)
-    {
+    for (int i = 0; i < kit.length; i++) {
       Bukkit.broadcastMessage("Kit: " + i);
       new Kit(kit[i], kitConfig.getConfig().getString("Kits." + kit[i] + ".icon"));
     }
   }
   
-  public void loadChooseInventory(RankedType type)
-  {
+  public void loadChooseInventory(RankedType type) {
     String[] mapList = MapUtils.getAllExistingMap();
     String[] validMap = new String[mapList.length];
     Inventory inventory = null;
-    for (int i = 0; i < mapList.length; i++)
-    {
+    for (int i = 0; i < mapList.length; i++) {
       MapUtils.directoryName.put(MapUtils.getName(mapList[i]), mapList[i]);
       Bukkit.broadcastMessage(mapList[i] + " " + i);
-      if (MapUtils.isValidMap(mapList[i], type)) {
+      if (MapUtils.isValidMap(mapList[i], type))
         validMap[i] = mapList[i];
-      }
     }
     String name = "Voter une map (" + type.getType() + "vs" + type.getType() + ")";
     inventory = getServer().createInventory(null, 9, name);
