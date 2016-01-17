@@ -81,7 +81,7 @@ public class Main
     }
     loadKitsInventory();
   }
-  
+  //test
   public static void readConfig()
   {
     plugin.getLogger().info("Initialize config...");
