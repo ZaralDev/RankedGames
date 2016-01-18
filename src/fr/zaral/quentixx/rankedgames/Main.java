@@ -27,7 +27,8 @@ import fr.zaral.quentixx.rankedgames.utils.MapUtils;
 public class Main extends JavaPlugin {
 	
 	/**
-	 * @authors Zaral, Quentixx
+	 * @author Zaral
+	 * @author Quentixx
 	 */
 	
 	public static Plugin plugin;
