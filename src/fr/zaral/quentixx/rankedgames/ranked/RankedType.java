@@ -1,5 +1,7 @@
 package fr.zaral.quentixx.rankedgames.ranked;
 
+import org.bukkit.ChatColor;
+
 import fr.zaral.quentixx.rankedgames.Main;
 
 public class RankedType {
@@ -13,9 +15,11 @@ public class RankedType {
 	
 	private int type;
 	private RankedQueue queue;
+	private RankedTeam[] teams;
   
-	public RankedType(int type) {
+	public RankedType(int type, RankedTeam[] teams) {
 		this.type = type;
+		this.teams = teams;
 		queue = new RankedQueue();
 		queue.setType(this);
 		queue.setSlots(type * 2);
@@ -27,5 +31,16 @@ public class RankedType {
   
 	public int getType() {
 		return this.type;
+	}
+	
+	public RankedTeam[] getTeams() {
+		return this.teams;
+	}
+	
+	public RankedTeam getTeam(ChatColor color) {
+		for (RankedTeam team : teams)
+			if (team.getColor().equals(color))
+				return team;
+		return null;
 	}
 }

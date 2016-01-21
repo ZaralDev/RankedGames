@@ -31,18 +31,27 @@ public class RankedPlayer {
 	private String playerName;
 	private boolean voted;
 	private boolean hasKit;
+	private RankedTeam team;
   
 	public RankedPlayer(Player player) {
 		this.player = player;
-		this.playerName = player.getName();
-		this.voted = false;
+		playerName = player.getName();
+		voted = false;
 		rankedPlayers.add(this);
 	}
   
 	public boolean hasKit() {
 		return this.hasKit;
 	}
+	
+	public void setTeam(RankedTeam team) {
+		this.team = team;
+	}
   
+	public RankedTeam getTeam() {
+		return this.team;
+	}
+	
 	public boolean setKit(boolean hasKit) {
 		this.hasKit = hasKit;
 		return hasKit;

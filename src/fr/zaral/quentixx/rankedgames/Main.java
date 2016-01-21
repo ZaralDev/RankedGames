@@ -19,6 +19,7 @@ import fr.zaral.quentixx.rankedgames.kit.Kit;
 import fr.zaral.quentixx.rankedgames.listeners.PlayerListener;
 import fr.zaral.quentixx.rankedgames.listeners.SignListener;
 import fr.zaral.quentixx.rankedgames.ranked.Ranked;
+import fr.zaral.quentixx.rankedgames.ranked.RankedTeam;
 import fr.zaral.quentixx.rankedgames.ranked.RankedType;
 import fr.zaral.quentixx.rankedgames.utils.CodeUtils;
 import fr.zaral.quentixx.rankedgames.utils.ConfigAccessor;
@@ -75,8 +76,9 @@ public class Main extends JavaPlugin {
     
 		Bukkit.getServer().getPluginManager().registerEvents(new PlayerListener(), this);
 		Bukkit.getServer().getPluginManager().registerEvents(new SignListener(), this);
+		RankedTeam[] teams = new RankedTeam[]{new RankedTeam(ChatColor.RED), new RankedTeam(ChatColor.BLUE)};
 		for (int i = 1; i <= 3; i++)
-			types.add(new RankedType(i));
+			types.add(new RankedType(i, teams));
 		for (RankedType type : types)
 			loadChooseInventory(type);
 		loadKitsInventory();

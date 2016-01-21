@@ -39,6 +39,7 @@ public class Ranked {
 	private String gameMap = "";
 	private boolean started;
 	public static int id = 0;
+	private World world;
   
 	public Ranked(RankedType type, ArrayList<RankedPlayer> players) {
 		this.type = type;
@@ -62,6 +63,10 @@ public class Ranked {
   
 	public boolean isVoting() {
 		return this.voting;
+	}
+	
+	public World getWorld() {
+		return this.world;
 	}
   
 	public ArrayList<RankedPlayer> getPlayers() {
@@ -186,7 +191,7 @@ public class Ranked {
 		id += 1;
 		Bukkit.getServer().broadcastMessage(mapName);
 		MapUtils.copyFile(Main.mapsDir + File.separator + mapOriginalName, Main.backupDir + File.separator + mapName);
-		World world = Bukkit.getServer().createWorld(new WorldCreator(Main.backupDir + File.separator + mapName));
+		world = Bukkit.getServer().createWorld(new WorldCreator(Main.backupDir + File.separator + mapName));
 		world.setAutoSave(false);
 		world.setTime(0L);
 		switch (getRankedType().getType()) {
@@ -206,10 +211,12 @@ public class Ranked {
 		itemMeta.setDisplayName(ChatColor.GOLD + "Choisir un kit");
 		item.setItemMeta(itemMeta);
 		for (RankedPlayer rankedPlayer : getPlayers()) {
-			Player player = rankedPlayer.getPlayer();
+			// TODO A FAIRE!
+			rankedPlayer.setTeam(getRankedType().getTeam(ChatColor.RED));
+			/*Player player = rankedPlayer.getPlayer();
 			player.teleport(loc);
 			PlayerUtils.goNaked(player);
-			player.getInventory().addItem(new ItemStack[] { item });
+			player.getInventory().addItem(new ItemStack[] { item });*/
 		}
 		messageGame(ChatColor.YELLOW + "Vous avez 15 secondes pour choisir un kit!");
 		Bukkit.getServer().getScheduler().runTaskLater(Main.plugin, new Runnable() {
@@ -240,5 +247,53 @@ public class Ranked {
 			Player player = rankedPlayer.getPlayer();
 			player.sendMessage(msg);
 		}
+	}
+	
+	public void lose(RankedPlayer rankedPlayer) {
+		String name = rankedPlayer.getPlayerName();
+		rankedPlayer.getPlayer().sendMessage(ChatColor.RED + "Vous avez perdu!");
+		removePlayer(rankedPlayer);
+		messageGame(ChatColor.RED + "" + name + " a perdu!");
+		RankedTeam winTeam = null;
+		if (getPlayers().size() <= getRankedType().getType()) {
+			int i = 0;
+			for (RankedPlayer rankedP : getPlayers()) {
+				for (RankedTeam team : getRankedType().getTeams()) {
+					if (rankedP.getTeam().equals(team))
+						i++;
+					if (i == getPlayers().size()) {
+						winTeam = team;
+						break;
+					}
+				}
+			}
+		}
+		if (winTeam != null)
+			win(winTeam);
+	}
+	
+	public void win(RankedTeam winTeam) {
+		// TODO Code sûrement pas stable
+		ArrayList<RankedPlayer> winners = new ArrayList<>();
+		for (RankedPlayer rankedPlayer : getPlayers())
+			if (rankedPlayer.getTeam().equals(winTeam))
+				winners.add(rankedPlayer);
+		String winnersString = "";
+		int i = 0;
+		for (RankedPlayer winner : winners) {
+			winnersString += winner.getPlayerName() + (i == winners.size() ? "" : ", ");
+			i++;
+		}
+		messageGame(ChatColor.AQUA + "Duel remporté! (" + winnersString + ")");
+		reset();
+	}
+	
+	public void reset() {
+		for (RankedPlayer rankedPlayer : getPlayers()) {
+			PlayerUtils.tpSpawn(rankedPlayer.getPlayer());
+			rankedPlayer.del();
+		}
+		Bukkit.getServer().unloadWorld(getWorld(), false);
+		// TODO A finir!
 	}
 }

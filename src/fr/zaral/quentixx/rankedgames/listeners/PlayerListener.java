@@ -129,9 +129,21 @@ public class PlayerListener implements Listener {
 	
 	@EventHandler
 	public void onPlayerDeath(PlayerDeathEvent event) {
+		if (event.getEntity() instanceof Player) {
+			Player player = (Player) event.getEntity();
+			String name = player.getName();
+			RankedPlayer rankedPlayer = RankedPlayer.get(name);
+			if (rankedPlayer != null) {
+				Ranked ranked = Ranked.get(rankedPlayer);
+				if (ranked != null)
+					ranked.lose(rankedPlayer);
+			}
+			// Mieux non?
+		}
+		
+		/* Ce code de merde est fait par Zaral :P
 		Player player = event.getEntity().getPlayer();
 		RankedPlayer rankedPlayer = RankedPlayer.get(player.getName());
-		
 		if ((rankedPlayer != null) && (rankedPlayer.isInGame())) {
 			//Player killer = event.getEntity().getKiller();
 			Ranked ranked = Ranked.get(rankedPlayer);
@@ -143,7 +155,7 @@ public class PlayerListener implements Listener {
 					p.sendMessage(ChatColor.GOLD + winer.getPlayerName() + " a gagné la partie !");
 				}
 			}
-		}
+		}*/
 	}
 	
 	@EventHandler

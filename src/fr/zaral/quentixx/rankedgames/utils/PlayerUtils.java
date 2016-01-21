@@ -2,6 +2,9 @@ package fr.zaral.quentixx.rankedgames.utils;
 
 import java.sql.SQLException;
 
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
@@ -38,5 +41,12 @@ public class PlayerUtils {
 			}
 		}
 		return null;
+	}
+	
+	public static void tpSpawn(Player player) {
+		goNaked(player);
+		World world = Bukkit.getServer().getWorlds().get(0);
+		player.teleport(world.getSpawnLocation());
+		player.sendMessage(ChatColor.GREEN + "Téléportation au spawn!");
 	}
 }
