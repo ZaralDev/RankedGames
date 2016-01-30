@@ -17,14 +17,9 @@ public class CodeUtils {
 	}
 	
 	public static int getIdealInvSize(int needed) {
-		int i = 9;
-		int count = 1;
-		while (i != 54) {
-			if (needed <= i)
-				return i;
-			count++;
-			i *= count;
-		}
+		for (int i = 1; i <= 5; i++)
+			if (needed <= 9*i)
+				return 9*i;
 		return 9;
 	}
 }
