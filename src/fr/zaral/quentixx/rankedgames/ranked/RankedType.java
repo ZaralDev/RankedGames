@@ -2,12 +2,12 @@ package fr.zaral.quentixx.rankedgames.ranked;
 
 import org.bukkit.ChatColor;
 
-import fr.zaral.quentixx.rankedgames.Main;
+import fr.zaral.quentixx.rankedgames.RankedGames;
 
 public class RankedType {
 	
 	public static RankedType get(int type) {
-		for (RankedType t : Main.types)
+		for (RankedType t : RankedGames.types)
 			if (t.getType() == type)
 				return t;
 		return null;

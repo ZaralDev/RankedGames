@@ -6,7 +6,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.scheduler.BukkitTask;
 
-import fr.zaral.quentixx.rankedgames.Main;
+import fr.zaral.quentixx.rankedgames.RankedGames;
 
 public class RankedQueue implements Runnable {
 	
@@ -15,7 +15,7 @@ public class RankedQueue implements Runnable {
 	private int lastpos = 0;
 	private RankedType type;
 	private ArrayList<RankedPlayer> clients = new ArrayList<>();
-	BukkitTask task = Bukkit.getServer().getScheduler().runTaskTimer(Main.plugin, this, 140L, 140L);
+	BukkitTask task = Bukkit.getServer().getScheduler().runTaskTimer(RankedGames.plugin, this, 140L, 140L);
   
 	public void run() {
 		if (lastResult != getPlayers().size()) {

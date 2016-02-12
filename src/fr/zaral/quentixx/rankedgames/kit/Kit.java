@@ -11,7 +11,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import fr.zaral.quentixx.rankedgames.Main;
+import fr.zaral.quentixx.rankedgames.RankedGames;
 import fr.zaral.quentixx.rankedgames.utils.ItemFromConfigAPI;
 import fr.zaral.quentixx.rankedgames.utils.PlayerUtils;
 
@@ -45,7 +45,7 @@ public class Kit {
 	public ItemStack chestplate;
 	public ItemStack leggings;
 	public ItemStack boots;
-	private FileConfiguration config = Main.kitConfig.getConfig();
+	private FileConfiguration config = RankedGames.kitConfig.getConfig();
 	public ItemStack[] items;
   
 	public Kit(String name, String icon) {

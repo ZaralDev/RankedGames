@@ -1,4 +1,4 @@
 name: RankedGames
 version: 1.0
 authors: [Zaral, Quentixx]
-main: fr.zaral.quentixx.rankedgames.Main
+main: fr.zaral.quentixx.rankedgames.RankedGames

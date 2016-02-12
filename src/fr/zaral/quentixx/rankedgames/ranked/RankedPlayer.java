@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-import fr.zaral.quentixx.rankedgames.Main;
+import fr.zaral.quentixx.rankedgames.RankedGames;
 import fr.zaral.quentixx.rankedgames.event.PlayerLeaveQueueEvent;
 import fr.zaral.quentixx.rankedgames.event.PlayerLeaveRankedEvent;
 
@@ -58,11 +58,11 @@ public class RankedPlayer {
 	}
   
 	public boolean isVip() {
-		return this.player.hasPermission(Main.plugin.getConfig().getString("permission.vip"));
+		return this.player.hasPermission(RankedGames.plugin.getConfig().getString("permission.vip"));
 	}
   
 	public boolean isInGame() {
-		for (Ranked ranked : Main.rankeds)
+		for (Ranked ranked : RankedGames.rankeds)
 			if (ranked.containsPlayer(this))
 				return true;
 		return false;
@@ -86,7 +86,7 @@ public class RankedPlayer {
 	}
   
 	public RankedType getRankedType() {
-		for (RankedType type : Main.types)
+		for (RankedType type : RankedGames.types)
 			if (type.getQueue().containsPlayer(this))
 				return type;
 		return null;

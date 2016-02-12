@@ -16,7 +16,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import fr.zaral.quentixx.rankedgames.kit.Kit;
-import fr.zaral.quentixx.rankedgames.Main;
+import fr.zaral.quentixx.rankedgames.RankedGames;
 import fr.zaral.quentixx.rankedgames.utils.MapUtils;
 import fr.zaral.quentixx.rankedgames.utils.PlayerUtils;
 
@@ -26,7 +26,7 @@ public class Ranked {
 	private ArrayList<RankedPlayer> players;
 
 	public static Ranked get(RankedPlayer rankedPlayer) {
-		for (Ranked ranked : Main.rankeds)
+		for (Ranked ranked : RankedGames.rankeds)
 			if (ranked.containsPlayer(rankedPlayer))
 				return ranked;
 		return null;
@@ -46,7 +46,7 @@ public class Ranked {
 		this.players = players;
 		voting = false;
 		started = false;
-		Main.rankeds.add(this);
+		RankedGames.rankeds.add(this);
 	}
   
 	public RankedType getRankedType() {
@@ -164,14 +164,14 @@ public class Ranked {
 		messageGame(ChatColor.GOLD + "Le choix de la map va commencer dans 5 secondes");
 		voting = true;
 		if (!this.canceled) {
-			Bukkit.getScheduler().runTaskLater(Main.plugin, new Runnable() {
+			Bukkit.getScheduler().runTaskLater(RankedGames.plugin, new Runnable() {
 				public void run() {
 					if (!Ranked.this.canceled) {
 						for (RankedPlayer rankedPlayer : Ranked.this.players) {
 							Player player = rankedPlayer.getPlayer();
-							player.openInventory(Main.getInventory(Ranked.this.getRankedType()));
+							player.openInventory(RankedGames.getInventory(Ranked.this.getRankedType()));
 						}
-						Bukkit.getScheduler().runTaskLater(Main.plugin, new Runnable() {
+						Bukkit.getScheduler().runTaskLater(RankedGames.plugin, new Runnable() {
 							public void run() {
 								if (!Ranked.this.canceled) {
 									Ranked.this.endVote();
@@ -190,8 +190,8 @@ public class Ranked {
 		mapName = id + "_" + mapName;
 		id += 1;
 		Bukkit.getServer().broadcastMessage(mapName);
-		MapUtils.copyFile(Main.mapsDir + File.separator + mapOriginalName, Main.backupDir + File.separator + mapName);
-		world = Bukkit.getServer().createWorld(new WorldCreator(Main.backupDir + File.separator + mapName));
+		MapUtils.copyFile(RankedGames.mapsDir + File.separator + mapOriginalName, RankedGames.backupDir + File.separator + mapName);
+		world = Bukkit.getServer().createWorld(new WorldCreator(RankedGames.backupDir + File.separator + mapName));
 		world.setAutoSave(false);
 		world.setTime(0L);
 		switch (getRankedType().getType()) {
@@ -202,9 +202,9 @@ public class Ranked {
 		case 3: 
 			break;
 		}
-		double x = Main.plugin.getConfig().getDouble("Maps." + this.gameMap + ".x");
-		double y = Main.plugin.getConfig().getDouble("Maps." + this.gameMap + ".y");
-		double z = Main.plugin.getConfig().getDouble("Maps." + this.gameMap + ".z");
+		double x = RankedGames.plugin.getConfig().getDouble("Maps." + this.gameMap + ".x");
+		double y = RankedGames.plugin.getConfig().getDouble("Maps." + this.gameMap + ".y");
+		double z = RankedGames.plugin.getConfig().getDouble("Maps." + this.gameMap + ".z");
 		Location loc = new Location(world, x, y, z);
 		ItemStack item = new ItemStack(Material.DIAMOND_SWORD);
 		ItemMeta itemMeta = item.getItemMeta();
@@ -219,7 +219,7 @@ public class Ranked {
 			player.getInventory().addItem(new ItemStack[] { item });*/
 		}
 		messageGame(ChatColor.YELLOW + "Vous avez 15 secondes pour choisir un kit!");
-		Bukkit.getServer().getScheduler().runTaskLater(Main.plugin, new Runnable() {
+		Bukkit.getServer().getScheduler().runTaskLater(RankedGames.plugin, new Runnable() {
 			public void run() {
 				for (final RankedPlayer rankedPlayer : getPlayers()) {
 					if (!rankedPlayer.hasKit()) {
@@ -229,7 +229,7 @@ public class Ranked {
 						rankedPlayer.setKit(true);
 						rankedPlayer.getPlayer().sendMessage(ChatColor.YELLOW + "La partie commence dans 5 secondes");
 					}
-					Bukkit.getScheduler().runTaskLater(Main.plugin, new Runnable() {
+					Bukkit.getScheduler().runTaskLater(RankedGames.plugin, new Runnable() {
 						public void run() {
 							for (RankedPlayer rankedPlayer : Ranked.this.getPlayers()) {
 								rankedPlayer.getPlayer().sendMessage("�9Que le meilleur gagne !");

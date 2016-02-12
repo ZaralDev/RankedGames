@@ -13,7 +13,7 @@ public class SpamLevel implements Runnable {
 	private static HashMap<String, Integer> level;
   
 	public SpamLevel() {
-		this.task = Bukkit.getServer().getScheduler().runTaskTimer(Main.plugin, this, 0L, 40L);
+		this.task = Bukkit.getServer().getScheduler().runTaskTimer(RankedGames.plugin, this, 0L, 40L);
 		level = new HashMap<>();
 	}
   

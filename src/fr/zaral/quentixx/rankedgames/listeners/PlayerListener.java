@@ -19,7 +19,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 
 import fr.zaral.quentixx.rankedgames.Database;
-import fr.zaral.quentixx.rankedgames.Main;
+import fr.zaral.quentixx.rankedgames.RankedGames;
 import fr.zaral.quentixx.rankedgames.event.PlayerLeaveQueueEvent;
 import fr.zaral.quentixx.rankedgames.event.PlayerLeaveRankedEvent;
 import fr.zaral.quentixx.rankedgames.kit.Kit;
@@ -123,7 +123,7 @@ public class PlayerListener implements Listener {
 		RankedPlayer rankedTarget = RankedPlayer.get(player.getName());
 		if ((rankedTarget != null) && (rankedTarget.isInGame()) && (clicked.hasItemMeta()) && (clicked.getType() == Material.DIAMOND_SWORD) && (!rankedTarget.hasKit()) && (clicked.getItemMeta().hasDisplayName())) {
 			event.setCancelled(true);
-			player.openInventory(Main.kitsInventory);
+			player.openInventory(RankedGames.kitsInventory);
 		}
 	}
 	
@@ -167,7 +167,7 @@ public class PlayerListener implements Listener {
 				Ranked ranked = Ranked.get(rankedPlayer);
 				if (ranked == null)
 					return;
-				if (event.getInventory().getName().equals(Main.getInventory(ranked.getRankedType()).getName())) {
+				if (event.getInventory().getName().equals(RankedGames.getInventory(ranked.getRankedType()).getName())) {
 					event.setCancelled(true);
 					if ((ranked.isVoting()) && (!rankedPlayer.hasVoted()) && (event.getCurrentItem() != null) && (event.getCurrentItem().hasItemMeta()) && (event.getCurrentItem().getItemMeta().hasDisplayName())) {
 						String getMap = event.getCurrentItem().getItemMeta().getDisplayName();
@@ -176,7 +176,7 @@ public class PlayerListener implements Listener {
 						ranked.addVote(getMap);
 						player.closeInventory();
 					}
-				} else if (event.getInventory().getName().equals(Main.kitsInventory.getName())) {
+				} else if (event.getInventory().getName().equals(RankedGames.kitsInventory.getName())) {
 					event.setCancelled(true);
 					Kit kit = null;
 					for (Kit k : Kit.getKits()) {

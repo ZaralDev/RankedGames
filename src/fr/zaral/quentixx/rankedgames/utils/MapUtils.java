@@ -9,7 +9,7 @@ import org.apache.commons.io.FileUtils;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 
-import fr.zaral.quentixx.rankedgames.Main;
+import fr.zaral.quentixx.rankedgames.RankedGames;
 import fr.zaral.quentixx.rankedgames.ranked.RankedType;
 
 public class MapUtils {
@@ -17,11 +17,11 @@ public class MapUtils {
 	public static HashMap<String, String> directoryName = new HashMap<>();
   
 	public static String[] getAllExistingMap() {
-		return Main.map;
+		return RankedGames.map;
 	}
   
 	public static String getName(String mapName) {
-		return Main.plugin.getConfig().getString("Maps." + mapName + ".name");
+		return RankedGames.plugin.getConfig().getString("Maps." + mapName + ".name");
 	}
   
 	public static String getDirectoryParent(String name) {
@@ -33,11 +33,11 @@ public class MapUtils {
 	public static String getDirectory(String mapName) {
 		// Bukkit.broadcastMessage("�9 " + mapName);
 		// Bukkit.broadcastMessage("�6" + Main.plugin.getConfig().getString(new StringBuilder("Maps.").append(mapName).append(".directoryName").toString()));
-		return Main.plugin.getConfig().getString("Maps." + mapName + ".directoryName");
+		return RankedGames.plugin.getConfig().getString("Maps." + mapName + ".directoryName");
 	}
   
 	public static Material getInventoryItem(String mapName) {
-		String itemStackToString = Main.plugin.getConfig().getString("Maps." + mapName + ".inventoryItem");
+		String itemStackToString = RankedGames.plugin.getConfig().getString("Maps." + mapName + ".inventoryItem");
 		// Bukkit.broadcastMessage(itemStackToString + " 2 " + mapName);
 		Material material = Material.AIR;
 		Material[] arrayOfMaterial;
@@ -52,7 +52,7 @@ public class MapUtils {
   
 	public static boolean isValidMap(String mapName, RankedType type) {
 		@SuppressWarnings("unchecked")
-		ArrayList<String> list = (ArrayList<String>) Main.plugin.getConfig().getList("Maps." + mapName + ".typeMap");
+		ArrayList<String> list = (ArrayList<String>) RankedGames.plugin.getConfig().getList("Maps." + mapName + ".typeMap");
 		String[] stringList = new String[list.size()];
 		stringList = (String[])list.toArray(stringList);
 		for (int i = 0; i < stringList.length; i++) {
@@ -65,7 +65,7 @@ public class MapUtils {
 	}
   
 	public static File getBackup() {
-		return new File(Main.plugin.getConfig().getString("backup"));
+		return new File(RankedGames.plugin.getConfig().getString("backup"));
 	}
   
 	public static File copyFile(String srcDir, String backupDir) {
